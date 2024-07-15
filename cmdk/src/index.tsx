@@ -37,6 +37,7 @@ export type ListProps = Children &
      * Accessible label for this List of suggestions. Not shown visibly.
      */
     label?: string
+    component?: React.ComponentType<any>
   }
 export type ItemProps = Children &
   Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
@@ -825,7 +826,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRe
  * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
  */
 const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
-  const { children, label = 'Suggestions', ...etc } = props
+  const { children, label = 'Suggestions', component: Component = Primitive.div, ...etc } = props
   const ref = React.useRef<HTMLDivElement>(null)
   const height = React.useRef<HTMLDivElement>(null)
   const context = useCommand()
@@ -850,7 +851,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) =
   }, [])
 
   return (
-    <Primitive.div
+    <Component
       ref={mergeRefs([ref, forwardedRef])}
       {...etc}
       cmdk-list=""
@@ -863,7 +864,7 @@ const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) =
           {child}
         </div>
       ))}
-    </Primitive.div>
+    </Component>
   )
 })
 
