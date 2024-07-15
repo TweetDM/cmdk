@@ -1,5 +1,5 @@
 {
-  "name": "cmdk",
+  "name": "@tweetmd/cmdk",
   "version": "1.0.0",
   "license": "MIT",
   "main": "./dist/index.js",
