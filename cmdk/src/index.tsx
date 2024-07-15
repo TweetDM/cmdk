@@ -156,8 +156,8 @@ const VALUE_ATTR = `data-value`
 const defaultFilter: CommandProps['filter'] = (value, search, keywords) => commandScore(value, search, keywords)
 
 // @ts-ignore
-const CommandContext = React.createContext<Context>(undefined)
-const useCommand = () => React.useContext(CommandContext)
+export const CommandContext = React.createContext<Context>(undefined)
+export const useCommand = () => React.useContext(CommandContext)
 // @ts-ignore
 const StoreContext = React.createContext<Store>(undefined)
 const useStore = () => React.useContext(StoreContext)
