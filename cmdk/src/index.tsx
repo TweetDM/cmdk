@@ -4,10 +4,10 @@ import { commandScore } from './command-score'
 import { Primitive } from '@radix-ui/react-primitive'
 import { useId } from '@radix-ui/react-id'
 
-type Children = { children?: React.ReactNode }
-type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
+export type Children = { children?: React.ReactNode }
+export type DivProps = React.ComponentPropsWithoutRef<typeof Primitive.div>
 
-type LoadingProps = Children &
+export type LoadingProps = Children &
   DivProps & {
     /** Estimated progress of loading asynchronous options. */
     progress?: number
@@ -17,12 +17,12 @@ type LoadingProps = Children &
     label?: string
   }
 
-type EmptyProps = Children & DivProps & {}
-type SeparatorProps = DivProps & {
+export type EmptyProps = Children & DivProps & {}
+export type SeparatorProps = DivProps & {
   /** Whether this separator should always be rendered. Useful if you disable automatic filtering. */
   alwaysRender?: boolean
 }
-type DialogProps = RadixDialog.DialogProps &
+export type DialogProps = RadixDialog.DialogProps &
   CommandProps & {
     /** Provide a className to the Dialog overlay. */
     overlayClassName?: string
@@ -31,14 +31,14 @@ type DialogProps = RadixDialog.DialogProps &
     /** Provide a custom element the Dialog should portal into. */
     container?: HTMLElement
   }
-type ListProps = Children &
+export type ListProps = Children &
   DivProps & {
     /**
      * Accessible label for this List of suggestions. Not shown visibly.
      */
     label?: string
   }
-type ItemProps = Children &
+export type ItemProps = Children &
   Omit<DivProps, 'disabled' | 'onSelect' | 'value'> & {
     /** Whether this item is currently disabled. */
     disabled?: boolean
@@ -54,7 +54,7 @@ type ItemProps = Children &
     /** Whether this item is forcibly rendered regardless of filtering. */
     forceMount?: boolean
   }
-type GroupProps = Children &
+export type GroupProps = Children &
   Omit<DivProps, 'heading' | 'value'> & {
     /** Optional heading to render for this group. */
     heading?: React.ReactNode
@@ -63,7 +63,7 @@ type GroupProps = Children &
     /** Whether this group is forcibly rendered regardless of filtering. */
     forceMount?: boolean
   }
-type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
+export type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, 'value' | 'onChange' | 'type'> & {
   /**
    * Optional controlled state for the value of the search input.
    */
@@ -73,7 +73,7 @@ type InputProps = Omit<React.ComponentPropsWithoutRef<typeof Primitive.input>, '
    */
   onValueChange?: (search: string) => void
 }
-type CommandProps = Children &
+export type CommandProps = Children &
   DivProps & {
     /**
      * Accessible label for this command menu. Not shown visibly.
@@ -116,7 +116,7 @@ type CommandProps = Children &
     vimBindings?: boolean
   }
 
-type Context = {
+export type Context = {
   value: (id: string, value: string, keywords?: string[]) => void
   item: (id: string, groupId: string) => () => void
   group: (id: string) => () => void
@@ -130,18 +130,18 @@ type Context = {
   // Refs
   listInnerRef: React.RefObject<HTMLDivElement | null>
 }
-type State = {
+export type State = {
   search: string
   value: string
   filtered: { count: number; items: Map<string, number>; groups: Set<string> }
 }
-type Store = {
+export type Store = {
   subscribe: (callback: () => void) => () => void
   snapshot: () => State
   setState: <K extends keyof State>(key: K, value: State[K], opts?: any) => void
   emit: () => void
 }
-type Group = {
+export type Group = {
   id: string
   forceMount?: boolean
 }
@@ -155,13 +155,10 @@ const SELECT_EVENT = `cmdk-item-select`
 const VALUE_ATTR = `data-value`
 const defaultFilter: CommandProps['filter'] = (value, search, keywords) => commandScore(value, search, keywords)
 
-// @ts-ignore
 export const CommandContext = React.createContext<Context>(undefined)
 export const useCommand = () => React.useContext(CommandContext)
-// @ts-ignore
 const StoreContext = React.createContext<Store>(undefined)
 const useStore = () => React.useContext(StoreContext)
-// @ts-ignore
 const GroupContext = React.createContext<Group>(undefined)
 
 const getId = (() => {
@@ -1067,7 +1064,7 @@ const useScheduleLayoutEffect = () => {
   }
 }
 
-function renderChildren(children: React.ReactElement) {
+export function renderChildren(children: React.ReactElement) {
   const childrenType = children.type as any
   // The children is a component
   if (typeof childrenType === 'function') return childrenType(children.props)
@@ -1077,7 +1074,7 @@ function renderChildren(children: React.ReactElement) {
   else return children
 }
 
-function SlottableWithNestedChildren(
+export function SlottableWithNestedChildren(
   { asChild, children }: { asChild?: boolean; children?: React.ReactNode },
   render: (child: React.ReactNode) => JSX.Element,
 ) {
